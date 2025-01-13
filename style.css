@@ -1,0 +1,49 @@
+html {
+    background-color: #f6f666;
+    /*background-color: #6A2323;*/
+}
+
+html > body {
+    text-align: center;
+    margin: 0;
+}
+
+#header {
+    /*background-color: rgba(0,0,0,1);*/
+    background: linear-gradient(180deg, rgb(0, 0, 0, 0.9) 0%, rgba(0,0,0,0.5) 100%);
+    font-family: "Fredericka the Great", serif;
+    font-size: 2em;
+    color: white;
+    box-shadow: 0px 0px 10px black;
+}
+
+#header > p {
+    padding: 0.1em;
+    margin: 0em;
+}
+
+#lily_img {
+    position: absolute;
+    width:15em;
+    left: 1em;
+    bottom: 0px;
+    margin:auto;
+}
+
+#chat_zone {
+    margin: 0em 2em;
+}
+
+.chat {
+    min-width: initial;
+    max-width: 45%;
+    border-radius: 0.5em;
+    text-wrap: wrap;
+    background-color: white;
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.5);
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 100;
+    font-style: normal;
+    margin-bottom: 0.5em;
+}
