@@ -58,7 +58,7 @@ html > body {
     width: calc(100% - 3.5rem);
     margin-top: 0.5rem;
     margin-left: -2.75rem;
-    padding-left: 0.75rem;
+    padding: 0rem 0.75rem;
     font-size: 1rem;
     font-weight: 100;
     font-family: "Quicksand", sans-serif;
@@ -98,11 +98,15 @@ html > body {
     font-weight: 100;
     font-style: normal;
     margin: 0;
-    margin-bottom: 0.5em;
+    margin-bottom: 0.8em;
     position: inline-flex;
     padding: 2px 6px;
     clear: both;
     text-align: left;
+}
+
+.chat.cosy {
+    margin-bottom: 0.2em !important;
 }
 
 ul {
@@ -136,4 +140,14 @@ li.bottom_line {
     clear: both;
     margin: auto;
     list-style: none;
+}
+
+span.time {
+    position: fixed;
+    font-size: 0.75em;
+    margin-top: -1em;
+    background: rgb(96, 170, 255);
+    color:white;
+    padding: 0 0.25em;
+    border-radius: 1em;
 }
