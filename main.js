@@ -3,6 +3,7 @@ chat_list = document.getElementById("chat_list");
 chat_zone = document.getElementById("chat_zone");
 
 latest_chat_record = null;
+app_state = "INIT";
 
 const magic_8_ball_lines = ["It is certain", "Reply hazy, try again", "Don't count on it", "It is decidedly so", "Ask again later",
 "My reply is no", "Without a doubt", "Better not tell you now", "My sources say no", "Yes definitely", "Cannot predict now", "Outlook not so good",
@@ -18,9 +19,35 @@ chatInputBox.addEventListener('keypress', function (e) {
         chatInputBox.value = "";
         // Insert a new chat bubble
         addChat("guest", insertedText, "NOW");
-        random_magic_8_ball_reply();
+        handleGuestChat(insertedText);
     }
 });
+
+function handleGuestChat(chatText) {
+    if (app_state == "INIT") {
+        return;
+    }
+    if (app_state == "MENU") {
+        switch (chatText) {
+            case "1":
+                addChat("host", "This is coming soon", "NOW");
+                return;
+            case "2":
+                addChat("host", "This is coming soon", "NOW");
+                return;
+            case "3":
+                magic8BallLaunch()
+                return;
+            default:
+                addChat("host", "I'll be real with you, hooman, I don't know what you're after", "NOW");
+                return;
+        }
+        return;
+    }   
+    if (app_state == "MAGIC") {
+        random_magic_8_ball_reply();
+    }
+}
 
 function addChat(actor, text, time)
 {
@@ -66,10 +93,23 @@ function introduction()
 {
     chatInputBox.focus();
     addChat("host", "Welcome to Chat Replay!", "NOW");
+    setTimeout(() => addChat("host", "What would you like to do today?", "NOW"), 1000);
+    setTimeout(() => addChat("host", "1.) Record a chat sequence", "NOW"), 2000);
+    setTimeout(() => addChat("host", "2.) Replay a chat sequence", "NOW"), 3000);
+    setTimeout(() => addChat("host", "3.) Play magic 8 ball with me", "NOW"), 4000);
+    setTimeout(() => {
+        addChat("host", "Tell me a number to pick your choice", "NOW");
+        app_state = "MENU";
+    }, 5000);
+}
+
+function magic8BallLaunch()
+{
+    app_state = "INIT";
     setTimeout(() => addChat("host", "I am wise Lily. I know all", "NOW"), 1000);
     setTimeout(() => addChat("host", "Fortunes... futures...", "NOW"), 3000);
     setTimeout(() => addChat("host", "And everything in-between!", "NOW"), 5000);
-    setTimeout(() => addChat("host", "Ask me any yes or no question", "NOW"), 7000);
+    setTimeout(() => {addChat("host", "Ask me any yes or no question", "NOW"); app_state = "MAGIC";}, 7000);
     // host_lines.forEach((v, index) =>  { setTimeout(() => addChat("host", v, "00:00"), 4000 * index+1 )});
 }
 
