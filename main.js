@@ -4,7 +4,7 @@ chat_zone = document.getElementById("chat_zone");
 
 latest_chat_record = null;
 
-const magic_8_ball_lines = ["It is certain", "Reply hazy, try again", "Don’t count on it", "It is decidedly so", "Ask again later",
+const magic_8_ball_lines = ["It is certain", "Reply hazy, try again", "Don't count on it", "It is decidedly so", "Ask again later",
 "My reply is no", "Without a doubt", "Better not tell you now", "My sources say no", "Yes definitely", "Cannot predict now", "Outlook not so good",
 "You may rely on it", "Concentrate and ask again", "Very doubtful", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes"];
 
@@ -14,7 +14,6 @@ chatInputBox.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
         // Consume current content of the chat field
         let insertedText = chatInputBox.value;
-        console.log(insertedText)
         // Clear input
         chatInputBox.value = "";
         // Insert a new chat bubble
@@ -28,14 +27,13 @@ function addChat(actor, text, time)
     if (time == "NOW") 
     {
         time = new Date()
-        time = `${time.getHours()}:${time.getMinutes()}`;
+        time = `${new String(time.getHours()).padStart(2, '0')}:${new String(time.getMinutes()).padStart(2, '0')}`;
     }
     let new_list_item = document.createElement("li");
     new_list_item.innerText = text;
     new_list_item.className = "chat " + actor;
     chat_list.appendChild(new_list_item);
-    if (latest_chat_record != null && 
-        latest_chat_record["time"] == time) 
+    if (latest_chat_record != null && latest_chat_record["time"] == time) 
     { // Cosy the new chat and the previous chat together
         if (latest_chat_record["actor"] == actor) {
             latest_chat_record.element.className += " cosy";
@@ -43,16 +41,25 @@ function addChat(actor, text, time)
     }
     else
     {
-        let time_span = document.createElement("span");
-        time_span.className = "time";
-        time_span.innerText = time;
-        new_list_item.prepend(time_span);
+        new_list_item.className += " timestamped";
+        new_list_item.setAttribute('data-timestamp', time);
     }
     // Add to the chat history array
     latest_chat_record = {"actor": actor, "time": time, "text": text, "element": new_list_item}
     chat_history.push(latest_chat_record);
     // Scroll the chat window down
     chat_zone.scrollTop = chat_zone.scrollHeight;
+    // Pop sound
+    var sound;
+    if (actor == "host") 
+    {
+        sound = document.getElementById("pop_sound"); 
+    }
+    else
+    {
+        sound = document.getElementById("ding_sound"); 
+    }
+    sound.play(); 
 }
 
 function introduction()

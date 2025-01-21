@@ -99,11 +99,22 @@ html > body {
     font-style: normal;
     margin: 0;
     margin-bottom: 0.8em;
-    position: inline-flex;
+    position: relative;
     padding: 2px 6px;
     clear: both;
     text-align: left;
 }
+
+.chat.timestamped::before {
+    content: attr(data-timestamp);
+    position: absolute;
+    margin-top: -1em;
+    background: rgb(96, 170, 255);
+    color:white;
+    padding: 0 0.25em;
+    border-radius: 1em;
+    font-size: 0.75em;
+  }
 
 .chat.cosy {
     margin-bottom: 0.2em !important;
@@ -140,14 +151,4 @@ li.bottom_line {
     clear: both;
     margin: auto;
     list-style: none;
-}
-
-span.time {
-    position: fixed;
-    font-size: 0.75em;
-    margin-top: -1em;
-    background: rgb(96, 170, 255);
-    color:white;
-    padding: 0 0.25em;
-    border-radius: 1em;
 }
