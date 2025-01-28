@@ -8,55 +8,6 @@ html > body {
     margin: 0;
 }
 
-@media (max-width: 600px) {
-    #header {
-        left: 0px !important;
-        margin-left: 0px !important;
-        width: 100% !important;
-    }
-
-    #chat_zone {
-        top: 3rem !important;
-        left: 0px !important;
-        bottom: 3rem !important;
-        overflow-y: scroll !important;
-        height: calc(100vh - 6rem) !important;
-    }
-
-    #body_frame {
-        box-shadow: none !important;
-        margin-left: 0% !important;
-        width: 100% !important;
-    }
-
-    #lily_img {
-        bottom: 3rem !important;
-    }
-}
-
-@media (max-width: 700px) {
-    #header {
-        margin-left: 10%;
-        width: 80%;
-    }
-
-    #chat_zone {
-        top: 3rem;
-        left: 0px;
-        bottom: 3rem;
-        overflow-y: scroll ;
-        height: calc(100vh - 6rem);
-    }
-
-    #body_frame {
-        margin-left: 10%;
-        width: 80%;
-    }
-
-    #lily_img {
-        bottom: 3rem;
-    }
-}
 
 #header {
     /*background-color: rgba(0,0,0,1);*/
@@ -65,10 +16,12 @@ html > body {
     font-size: 2em;
     color: black;
     box-shadow: 0px 0px 5px black;
-    z-index: 2;
+    z-index: 4;
     height: 3rem;
-    margin-left: 20%;
-    width: 60%;
+    border-radius: 3rem;
+    margin-left: 35%;
+    width: 30%;
+    position: absolute;
 }
 
 #header > p {
@@ -86,17 +39,21 @@ html > body {
 
 #chat_zone {
     top: 3rem;
-    left: 20%;
     bottom: 3rem;
     overflow-y: scroll;
     height: calc(100vh - 6rem);
-    background-color: #f9e180;
+    position: absolute;
+    width: 100%;
 }
 
 #body_frame {
+    background-color: #f9e180;
     box-shadow: 0px 3px 5px black;
     margin-left: 20%;
     width: 60%;
+    top: 0px;
+    position: absolute;
+    bottom: 0px;
 }
 
 #input_zone {
@@ -104,6 +61,7 @@ html > body {
     width: 100%;
     bottom: 0px;
     background-color: #f6df2c !important;
+    position: absolute;
 }
 
 #input_zone > input {
@@ -205,4 +163,54 @@ li.bottom_line {
     clear: both;
     margin: auto;
     list-style: none;
+}
+
+@media (max-width: 700px) {
+    #header {
+        margin-left: 10%;
+        width: 80%;
+    }
+
+    #chat_zone {
+        top: 3rem;
+        left: 0px;
+        bottom: 3rem;
+        overflow-y: scroll ;
+        height: calc(100vh - 6rem);
+    }
+
+    #body_frame {
+        margin-left: 10%;
+        width: 80%;
+    }
+
+    #lily_img {
+        bottom: 3rem;
+    }
+}
+
+@media (max-width: 600px) {
+    #header {
+        left: 0px !important;
+        margin-left: 0px !important;
+        width: 100% !important;
+    }
+
+    #chat_zone {
+        top: 3rem !important;
+        left: 0px !important;
+        bottom: 3rem !important;
+        overflow-y: scroll !important;
+        height: calc(100vh - 6rem) !important;
+    }
+
+    #body_frame {
+        box-shadow: none !important;
+        margin-left: 0% !important;
+        width: 100% !important;
+    }
+
+    #lily_img {
+        bottom: 3rem !important;
+    }
 }
