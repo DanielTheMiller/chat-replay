@@ -39,10 +39,9 @@ function handleGuestChat(chatText) {
                 magic8BallLaunch()
                 return;
             default:
-                addChat("host", "I'll be real with you, hooman, I don't know what you're after", "NOW");
+                setTimeout(() => addChat("host", "I'll be real with you, hooman, I don't know what you're after", "NOW"), 100);
                 return;
         }
-        return;
     }   
     if (app_state == "MAGIC") {
         random_magic_8_ball_reply();
@@ -118,6 +117,18 @@ function random_magic_8_ball_reply()
     let response_index= Math.floor(Math.random() * magic_8_ball_lines.length);
     let random_response = magic_8_ball_lines[response_index];
     setTimeout(() => addChat("host", random_response, "NOW"), 1000 )   
+}
+
+function record_chat_sequence()
+{
+    app_state = "INIT";
+    setTimeout(() => addChat("host", "Okay, lets record a chat sequence!", "NOW"), 500);
+    setTimeout(() => {addChat("host", "The recording will start when you make your first chat...", "NOW"); show_timer();  app_state = "READY"}, 1500);
+}
+
+function show_timer()
+{
+    
 }
 
 introduction();

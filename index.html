@@ -3,7 +3,7 @@
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Text&family=Fredericka+the+Great&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">    
+        <link href="https://fonts.googleapis.com/css2?family=Gloock&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
         <audio id="pop_sound">
             <source src="pop.mp3" type="audio/mpeg">
             Your browser does not support the audio element.
@@ -15,10 +15,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div id="header">
-            <p>Chat Replay</p>
-        </div>
         <div id="body_frame">
+            <div id="header">
+                <p>Chat Replay</p>
+            </div>
+            <div id="time_display">
+                <p>00:00:00</p>
+                <span>
+                    <img src="./send-icon.svg"/>
+                </span>
+            </div>
             <div id="chat_zone">
                 <ul id="chat_list">
                 </ul>
