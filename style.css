@@ -61,7 +61,7 @@ html > body {
     height: 3rem;
     width: 100%;
     bottom: 0px;
-    background: linear-gradient(0.75turn, #f6df2c, #f9d64e, #f9e180, #f3c058, #f0a400);
+    background: linear-gradient(1turn, #f6df2c, #f9d64e, #f9e180, #f3c058, #f0a400);
     position: absolute;
 }
 
@@ -169,16 +169,18 @@ li.bottom_line {
 #time_display {
     background-color: black;
     border-radius: 1rem;
+    box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
     color: white;
-    height: 1.25rem;
-    top: 3.5rem;
+    height: 1.5rem;
+    top: 0px;
     width: 8rem;
     left: calc(50% - 4rem);
-    font-size: 1rem;
+    font-size: 1.125rem;
     font-family: "Quicksand", serif;
     overflow: hidden;
     position: relative;
     z-index: 3;
+    transition: top 2s;
 }
 
 #time_display > p {
@@ -190,10 +192,51 @@ li.bottom_line {
 
 #time_display > span {
     width: 20%;
+    height: 100%;
     right: 0px;
     position: absolute;
     background-color: white;
+    border-radius: 1rem 0rem 0rem 1rem;
 }
+
+#time_display.shown {
+    top: 3.5rem;
+}
+
+#time_display > span.recording::before {
+    width: 1rem;
+    height: 1rem;
+    content: "";
+    position: absolute;
+    right: .285rem;
+    top: 0.25rem;
+    background: rgb(208, 0, 0);
+    color: white;
+    border-radius: 1rem;
+    font-size: 0.75em;
+}
+
+#time_display > span.paused::before, #time_display > span.paused::after {
+    width: 0.35rem;
+    height: 1rem;
+    content: "";
+    position: absolute;
+    top: 0.25rem;
+    background: rgb(0, 0, 0);
+    color: white;
+    font-size: 0.75em;
+    animation: fadeInAndOut 2s linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#time_display > span.paused::before {
+    left: 0.35rem;
+}
+#time_display > span.paused::after {
+    right: .35rem;
+}
+
 
 @media (max-width: 700px) 
 {
@@ -237,4 +280,9 @@ li.bottom_line {
     #lily_img {
         bottom: 3rem !important;
     }
+}
+
+@keyframes fadeInAndOut {
+    0%,100% { opacity: 0 }
+    50% { opacity: 1 }
 }

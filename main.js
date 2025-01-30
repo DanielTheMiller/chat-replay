@@ -30,7 +30,7 @@ function handleGuestChat(chatText) {
     if (app_state == "MENU") {
         switch (chatText) {
             case "1":
-                addChat("host", "This is coming soon", "NOW");
+                intro_record_chat_sequence()
                 return;
             case "2":
                 addChat("host", "This is coming soon", "NOW");
@@ -42,9 +42,14 @@ function handleGuestChat(chatText) {
                 setTimeout(() => addChat("host", "I'll be real with you, hooman, I don't know what you're after", "NOW"), 100);
                 return;
         }
-    }   
+    }
+    if (app_state == "READY_TO_RECORD") {
+
+        return;
+    }
     if (app_state == "MAGIC") {
         random_magic_8_ball_reply();
+        return;
     }
 }
 
@@ -119,16 +124,38 @@ function random_magic_8_ball_reply()
     setTimeout(() => addChat("host", random_response, "NOW"), 1000 )   
 }
 
-function record_chat_sequence()
+function intro_record_chat_sequence()
 {
     app_state = "INIT";
-    setTimeout(() => addChat("host", "Okay, lets record a chat sequence!", "NOW"), 500);
-    setTimeout(() => {addChat("host", "The recording will start when you make your first chat...", "NOW"); show_timer();  app_state = "READY"}, 1500);
+    setTimeout(() => {addChat("host", "Okay! Lets record a chat sequence!", "NOW"); show_timer();}, 500);
+    setTimeout(() => {addChat("host", "The recording will start when you make your first chat...", "NOW"); app_state = "READY_TO_RECORD"}, 1500);
 }
 
 function show_timer()
 {
-    
+    time_display_div = document.getElementById("time_display");
+    if (time_display_div.className == null) {
+        time_display_div.className = "shown";
+        return;
+    }
+    if (time_display_div.className.includes("shown")) {
+        warn("Attempt was made to show time display that was already shown");
+        return;
+    }
+    time_display_div.className = time_display_div.className + " shown";
+}
+
+function hide_timer()
+{
+    time_display_div = document.getElementById("time_display");
+    if (!time_display_div.className.includes("shown")) {
+        warn("Attempt was made to hide time display that was not shown");
+        return;
+    }
+    if (time_display_div.className == "shown") {
+        time_display_div.className = null;
+    }
+    time_display_div.className = time_display_div.className.replace(" shown", "");
 }
 
 introduction();
