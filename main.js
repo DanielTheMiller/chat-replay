@@ -2,14 +2,15 @@ chatInputBox = document.getElementById("input_line");
 chat_list = document.getElementById("chat_list");
 chat_zone = document.getElementById("chat_zone");
 
-latest_chat_record = null;
 app_state = "INIT";
 
 const magic_8_ball_lines = ["It is certain", "Reply hazy, try again", "Don't count on it", "It is decidedly so", "Ask again later",
 "My reply is no", "Without a doubt", "Better not tell you now", "My sources say no", "Yes definitely", "Cannot predict now", "Outlook not so good",
 "You may rely on it", "Concentrate and ask again", "Very doubtful", "As I see it, yes", "Most likely", "Outlook good", "Yes", "Signs point to yes"];
 
-chat_history = [];
+global_chat_history = [];
+recording_chat_history = [];
+recording_started_time = null;
 
 chatInputBox.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -43,8 +44,8 @@ function handleGuestChat(chatText) {
                 return;
         }
     }
-    if (app_state == "READY_TO_RECORD") {
-
+    if (app_state == "READY_TO_RECORD" || app_state == "RECORD") {
+        record_chat(chatText)
         return;
     }
     if (app_state == "MAGIC") {
@@ -64,6 +65,7 @@ function addChat(actor, text, time)
     new_list_item.innerText = text;
     new_list_item.className = "chat " + actor;
     chat_list.appendChild(new_list_item);
+    latest_chat_record = global_chat_history[global_chat_history.length-1];
     if (latest_chat_record != null && latest_chat_record["time"] == time) 
     { // Cosy the new chat and the previous chat together
         if (latest_chat_record["actor"] == actor) {
@@ -77,7 +79,7 @@ function addChat(actor, text, time)
     }
     // Add to the chat history array
     latest_chat_record = {"actor": actor, "time": time, "text": text, "element": new_list_item}
-    chat_history.push(latest_chat_record);
+    global_chat_history.push(latest_chat_record);
     // Scroll the chat window down
     chat_zone.scrollTop = chat_zone.scrollHeight;
     // Pop sound
@@ -131,6 +133,22 @@ function intro_record_chat_sequence()
     setTimeout(() => {addChat("host", "The recording will start when you make your first chat...", "NOW"); app_state = "READY_TO_RECORD"}, 1500);
 }
 
+function record_chat(chat_text) {
+    if (app_state == "READY_TO_RECORD") {
+        // Set time started to now
+        recording_started_time = new Date()
+        app_state = "RECORD";
+        setTimeout(() => addChat("host", "(You're now recording!)", "NOW"), 100);
+        setTimeout(() => addChat("host", "(Click on the time display above to pause your timer)", "NOW"), 1100);
+        start_timer();
+    }
+    // Add chat to list
+    current_time = new Date().getTime();
+    time = current_time - recording_started_time.getTime();
+    latest_chat_record = {"time": time, "text": chat_text};
+    recording_chat_history.push(latest_chat_record);
+}
+
 function show_timer()
 {
     time_display_div = document.getElementById("time_display");
@@ -145,6 +163,20 @@ function show_timer()
     time_display_div.className = time_display_div.className + " shown";
 }
 
+function start_timer()
+{
+    setInterval(() => update_time_display_value(), 1000);
+    status_span = document.getElementById("time_status_icon");
+    status_span.className = "recording";
+}
+
+function pause_timer()
+{
+    status_span = document.getElementById("time_status_icon");
+    status_span.className = "paused";
+    // HOW WILL THE TIMER BE SUSPENDED?
+}
+
 function hide_timer()
 {
     time_display_div = document.getElementById("time_display");
@@ -156,6 +188,16 @@ function hide_timer()
         time_display_div.className = null;
     }
     time_display_div.className = time_display_div.className.replace(" shown", "");
+}
+
+function update_time_display_value()
+{
+    time_text_p = document.getElementById("time_text");
+    var current_time = new Date();
+    current_time.setTime(current_time.getTime() - recording_started_time.getTime());
+    time_text_p.innerText = new String(current_time.getHours()-1).padStart(2, '0') + ":" +
+                            new String(current_time.getMinutes()).padStart(2, '0') + ":" +
+                            new String(current_time.getSeconds()).padStart(2, '0');
 }
 
 introduction();
