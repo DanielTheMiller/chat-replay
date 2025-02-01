@@ -11,6 +11,7 @@ const magic_8_ball_lines = ["It is certain", "Reply hazy, try again", "Don't cou
 global_chat_history = [];
 recording_chat_history = [];
 recording_started_time = null;
+recording_paused_time = null;
 
 chatInputBox.addEventListener('keypress', function (e) {
     if (e.key === 'Enter') {
@@ -116,7 +117,6 @@ function magic8BallLaunch()
     setTimeout(() => addChat("host", "Fortunes... futures...", "NOW"), 3000);
     setTimeout(() => addChat("host", "And everything in-between!", "NOW"), 5000);
     setTimeout(() => {addChat("host", "Ask me any yes or no question", "NOW"); app_state = "MAGIC";}, 7000);
-    // host_lines.forEach((v, index) =>  { setTimeout(() => addChat("host", v, "00:00"), 4000 * index+1 )});
 }
 
 function random_magic_8_ball_reply()
@@ -136,7 +136,7 @@ function intro_record_chat_sequence()
 function record_chat(chat_text) {
     if (app_state == "READY_TO_RECORD") {
         // Set time started to now
-        recording_started_time = new Date()
+        recording_started_time = new Date().getTime();
         app_state = "RECORD";
         setTimeout(() => addChat("host", "(You're now recording!)", "NOW"), 100);
         setTimeout(() => addChat("host", "(Click on the time display above to pause your timer)", "NOW"), 1100);
@@ -144,7 +144,7 @@ function record_chat(chat_text) {
     }
     // Add chat to list
     current_time = new Date().getTime();
-    time = current_time - recording_started_time.getTime();
+    time = current_time - recording_started_time;
     latest_chat_record = {"time": time, "text": chat_text};
     recording_chat_history.push(latest_chat_record);
 }
@@ -174,7 +174,17 @@ function pause_timer()
 {
     status_span = document.getElementById("time_status_icon");
     status_span.className = "paused";
-    // HOW WILL THE TIMER BE SUSPENDED?
+    recording_paused_time = new Date().getTime();
+}
+
+function resume_timer()
+{
+    // On resume, take the time at which the timer was paused and work out the duration between then and now
+    // Add the duration to the recording_started_time
+    durationOfPause = new Date().getTime() - recording_paused_time;
+    recording_started_time += durationOfPause;
+    status_span = document.getElementById("time_status_icon");
+    status_span.className = "recording";
 }
 
 function hide_timer()
@@ -194,7 +204,7 @@ function update_time_display_value()
 {
     time_text_p = document.getElementById("time_text");
     var current_time = new Date();
-    current_time.setTime(current_time.getTime() - recording_started_time.getTime());
+    current_time.setTime(current_time.getTime() - recording_started_time);
     time_text_p.innerText = new String(current_time.getHours()-1).padStart(2, '0') + ":" +
                             new String(current_time.getMinutes()).padStart(2, '0') + ":" +
                             new String(current_time.getSeconds()).padStart(2, '0');
