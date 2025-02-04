@@ -168,6 +168,8 @@ function start_timer()
     setInterval(() => update_time_display_value(), 1000);
     status_span = document.getElementById("time_status_icon");
     status_span.className = "recording";
+    start_btn = document.getElementById("start_btn");
+    start_btn.className = start_btn.className.replace("record", "pause")
 }
 
 function pause_timer()
