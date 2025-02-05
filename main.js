@@ -1,6 +1,9 @@
 chatInputBox = document.getElementById("input_line");
 chat_list = document.getElementById("chat_list");
 chat_zone = document.getElementById("chat_zone");
+start_btn = document.getElementById("start_btn");
+stop_btn = document.getElementById("stop_btn");
+send_btn = document.getElementById("send_btn");
 
 app_state = "INIT";
 
@@ -13,17 +16,15 @@ recording_chat_history = [];
 recording_started_time = null;
 recording_paused_time = null;
 
-chatInputBox.addEventListener('keypress', function (e) {
-    if (e.key === 'Enter') {
-        // Consume current content of the chat field
-        let insertedText = chatInputBox.value;
-        // Clear input
-        chatInputBox.value = "";
-        // Insert a new chat bubble
-        addChat("guest", insertedText, "NOW");
-        handleGuestChat(insertedText);
-    }
-});
+function send_chat() {
+    // Consume current content of the chat field
+    let insertedText = chatInputBox.value;
+    // Clear input
+    chatInputBox.value = "";
+    // Insert a new chat bubble
+    addChat("guest", insertedText, "NOW");
+    handleGuestChat(insertedText);
+}
 
 function handleGuestChat(chatText) {
     if (app_state == "INIT") {
@@ -134,9 +135,8 @@ function intro_record_chat_sequence()
 }
 
 function record_chat(chat_text) {
-    if (app_state == "READY_TO_RECORD") {
-        // Set time started to now
-        recording_started_time = new Date().getTime();
+    if (app_state == "READY_TO_RECORD") 
+    {
         app_state = "RECORD";
         setTimeout(() => addChat("host", "(You're now recording!)", "NOW"), 100);
         setTimeout(() => addChat("host", "(Click on the time display above to pause your timer)", "NOW"), 1100);
@@ -165,11 +165,20 @@ function show_timer()
 
 function start_timer()
 {
-    setInterval(() => update_time_display_value(), 1000);
     status_span = document.getElementById("time_status_icon");
     status_span.className = "recording";
     start_btn = document.getElementById("start_btn");
     start_btn.className = start_btn.className.replace("record", "pause")
+
+    if (recording_paused_time != null) // If we are resuming
+    {
+        resume_timer();
+        return;
+    } 
+    // This is the first time timer has started
+    setInterval(() => update_time_display_value(), 1000); // Start ticking for the first time
+    // Set time started to now
+    recording_started_time = new Date().getTime();
 }
 
 function pause_timer()
@@ -185,8 +194,6 @@ function resume_timer()
     // Add the duration to the recording_started_time
     durationOfPause = new Date().getTime() - recording_paused_time;
     recording_started_time += durationOfPause;
-    status_span = document.getElementById("time_status_icon");
-    status_span.className = "recording";
 }
 
 function hide_timer()
@@ -211,5 +218,15 @@ function update_time_display_value()
                             new String(current_time.getMinutes()).padStart(2, '0') + ":" +
                             new String(current_time.getSeconds()).padStart(2, '0');
 }
+
+start_btn.addEventListener("click", () => start_timer());
+stop_btn.addEventListener("click", () => pause_timer());
+send_btn.addEventListener("click", () => send_chat());
+
+chatInputBox.addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        send_chat();
+    }
+});
 
 introduction();
