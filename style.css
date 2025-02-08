@@ -180,7 +180,7 @@ li.bottom_line {
     /* overflow: hidden; */
     position: relative;
     z-index: 3;
-    transition: top 2s;
+    transition: top 1s;
 }
 
 #time_display > p {
@@ -231,7 +231,7 @@ li.bottom_line {
     font-size: 0.75em;
     animation: fadeInAndOut 4s linear;
     animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation-direction: initial;
 }
 
 #time_status_icon.paused::before {
@@ -301,6 +301,17 @@ li.bottom_line {
     position: absolute;
     right: 1.1rem;
     bottom: .42rem;
+    z-index: 3;
+    content: "";
+}
+
+#time_status_icon.stopped::after {
+    background-color: black;
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    right: .48rem;
+    bottom: .48rem;
     z-index: 3;
     content: "";
 }
