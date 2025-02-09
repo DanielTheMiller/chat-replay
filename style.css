@@ -204,42 +204,7 @@ li.bottom_line {
     top: 3.5rem;
 }
 
-#time_status_icon.recording::before {
-    width: 1.35rem;
-    height: 1.4rem;
-    content: "";
-    position: absolute;
-    right: .28rem;
-    top: 0.28rem;
-    background: rgb(208, 0, 0);
-    color: white;
-    border-radius: 1rem;
-    font-size: 0.75em;
-    animation: fadeInAndOut 2s linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
 
-#time_status_icon.paused::before, #time_status_icon.paused::after {
-    width: 0.35rem;
-    height: 1.1rem;
-    content: "";
-    position: absolute;
-    top: 0.44rem;
-    background: rgb(0, 0, 0);
-    color: white;
-    font-size: 0.75em;
-    animation: fadeInAndOut 4s linear;
-    animation-iteration-count: infinite;
-    animation-direction: initial;
-}
-
-#time_status_icon.paused::before {
-    left: 0.5rem;
-}
-#time_status_icon.paused::after {
-    right: .5rem;
-}
 
 #clock_buttons {
     bottom: 0px;
@@ -271,7 +236,7 @@ li.bottom_line {
     border-radius: 0rem 0rem 1.5rem 0rem;
 }
 
-#start_btn.play::after {
+#time_display.playback #start_btn.run::after {
     border: rgba(0,0,0,0) solid 0.5rem;
     border-right: none;
     border-left: white solid 0.75rem;
@@ -282,7 +247,7 @@ li.bottom_line {
     content: "";
 }
 
-#start_btn.record::after {
+#time_display.record #start_btn.run::after {
     border-radius: 1em;
     background-color: white;
     position: absolute;
@@ -292,6 +257,54 @@ li.bottom_line {
     height: .9rem;
     width: .9rem;
     content: "";
+}
+
+#time_display.record #time_status_icon.running::before {
+    width: 1.35rem;
+    height: 1.4rem;
+    content: "";
+    position: absolute;
+    right: .28rem;
+    top: 0.28rem;
+    background: rgb(208, 0, 0);
+    color: white;
+    border-radius: 1rem;
+    font-size: 0.75em;
+    animation: fadeInAndOut 2s linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#time_display.playback #time_status_icon.running::before {
+    border: rgba(0,0,0,0) solid 0.6rem;
+    border-right: none;
+    border-left: rgb(22, 179, 0) solid 0.9rem;
+    position: absolute;
+    right: .4rem;
+    bottom: .4rem;
+    z-index: 3;
+    content: "";
+    animation: fadeInAndOut 4s linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#time_status_icon.paused::before, #time_status_icon.paused::after {
+    width: 0.35rem;
+    height: 1.1rem;
+    content: "";
+    position: absolute;
+    top: 0.44rem;
+    background: rgb(0, 0, 0);
+    color: white;
+    font-size: 0.75em;
+}
+
+#time_status_icon.paused::before {
+    left: 0.5rem;
+}
+#time_status_icon.paused::after {
+    right: .5rem;
 }
 
 #stop_btn.stop::after {
